@@ -21,6 +21,7 @@ namespace week04
             InitializeComponent();
             LoadData();
             CreateExcel();
+            CreateTable();
         }
 
         private void LoadData()
@@ -48,7 +49,7 @@ namespace week04
                 xlApp.Visible = true;
                 xlApp.UserControl = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
                 MessageBox.Show(errMsg, "Error");
