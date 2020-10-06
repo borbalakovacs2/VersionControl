@@ -34,6 +34,7 @@ namespace week04
             LoadData();
             CreateExcel();
             CreateTable();
+            FormatTable();
         }
 
         private void LoadData()
@@ -76,11 +77,9 @@ namespace week04
 
         private void CreateTable()
         {
-
-
             for (int i = 0; i < headers.Length; i++)
             {
-                xlSheet.Cells[i + 1, 1] = headers[i];
+                xlSheet.Cells[1, i + 1] = headers[i];
             }
 
             object[,] values = new object[Flats.Count, headers.Length];
@@ -102,7 +101,7 @@ namespace week04
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
-                values[counter, 8] = "=" + GetCell(7, counter + 1) + "*" + GetCell(8, counter + 1); ;
+                values[counter, 8] = "=" + GetCell(counter + 2, 7) + "*" + GetCell(counter + 2, 8);
                 counter++;
             }
             xlSheet.get_Range(
@@ -140,8 +139,9 @@ namespace week04
 
             int lastRowID = xlSheet.UsedRange.Rows.Count;
             int lastColumnID = xlSheet.UsedRange.Columns.Count;
-            Excel.Range fullRange = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, lastColumnID));
-            fullRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+            Excel.Range dataRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, lastColumnID));
+            dataRange.Cells.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            dataRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
 
             Excel.Range firstColumn = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
             firstColumn.Font.Bold = true;
@@ -149,7 +149,7 @@ namespace week04
 
             Excel.Range lastColumn = xlSheet.get_Range(GetCell(2, lastColumnID), GetCell(lastRowID, lastColumnID));
             lastColumn.Interior.Color = Color.LightGreen;
-            lastColumn.NumberFormat = "#.##";
+            lastColumn.NumberFormat = "0.00";
 
         }
     }
