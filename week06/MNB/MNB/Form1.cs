@@ -18,7 +18,7 @@ namespace MNB
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
         static string result;
-        BindingList<string> Currencies = new BindingList<string>();
+        public static BindingList<string> Currencies = new BindingList<string>();
 
         public Form1()
         {
@@ -33,16 +33,22 @@ namespace MNB
 
         private static void GetCurrencies()
         {
-            var mnbServices = new MNBArfolyamServiceSoapClient();
-            var request = new GetCurrenciesRequestBody();
-            var response = mnbServices.GetCurrencies(request);
-            var result = response.GetCurrenciesResult;
-            var xml = new XmlDocument();
-            xml.LoadXml(result);
-            foreach (XmlElement element in xml.DocumentElement)
-            {
+            //var mnbServices = new MNBArfolyamServiceSoapClient();
+            //var request = new GetCurrenciesRequestBody();
+            //var response = mnbServices.GetCurrencies(request);
+            //var result = response.GetCurrenciesResult;
+            //var xml = new XmlDocument();
+            //xml.LoadXml(result);
+            //foreach (XmlElement element in xml.DocumentElement)
+            //{
+            //    string currency;
+            //    var childElement = (XmlElement)element.ChildNodes[0];
+            //    currency = childElement.GetAttribute("curr");
+            //    Currencies.Add(currency);
 
-            }
+
+            //}
+            Currencies.Add("EUR");
         }
 
         private void RefreshData()
