@@ -19,8 +19,10 @@ namespace Karacsony
         public IToyFactory Factory
         {
             get { return _factory; }
-            set { _factory = value;
-                DisplayNext(); 
+            set
+            {
+                _factory = value;
+                DisplayNext();
             }
         }
         private Toy _nextToy;
@@ -44,19 +46,18 @@ namespace Karacsony
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
             var position = 0;
-            foreach (var ball in _toys)
+            foreach (var toy in _toys)
             {
-                ball.MoveToy();
-                if (ball.Left > position)
+                toy.MoveToy();
+                if (toy.Left > position)
                 {
-                    position = ball.Left;
+                    position = toy.Left;
                 }
                 if (position > 1000)
                 {
                     var first = _toys[0];
                     mainPanel.Controls.Remove(first);
                     _toys.Remove(first);
-
                 }
             }
 
@@ -70,12 +71,14 @@ namespace Karacsony
 
         private void ballBtn_Click(object sender, EventArgs e)
         {
-            Factory = new BallFactory() {
+            Factory = new BallFactory()
+            {
                 BallColor = ballColor.BackColor
             };
         }
 
-        private void DisplayNext() {
+        private void DisplayNext()
+        {
 
             if (_nextToy != null)
                 Controls.Remove(_nextToy);
@@ -94,6 +97,15 @@ namespace Karacsony
             if (colorPicker.ShowDialog() != DialogResult.OK)
                 return;
             button.BackColor = colorPicker.Color;
+        }
+
+        private void presentBtn_Click(object sender, EventArgs e)
+        {
+            Factory = new PresentFactory()
+            {
+                Ribbon = presentRibbon.BackColor,
+                Box = presentBox.BackColor
+            };
         }
     }
 }
