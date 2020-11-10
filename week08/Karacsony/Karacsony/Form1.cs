@@ -1,4 +1,5 @@
-﻿using Karacsony.Entities;
+﻿using Karacsony.Abstractions;
+using Karacsony.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,9 @@ namespace Karacsony
 {
     public partial class Form1 : Form
     {
-        List<Ball> _balls = new List<Ball>();
-        private BallFactory _factory;
-        public BallFactory Factory
+        List<Toy> _toys = new List<Toy>();
+        private IToyFactory _factory;
+        public IToyFactory Factory
         {
             get { return _factory; }
             set { _factory = value; }
@@ -31,7 +32,7 @@ namespace Karacsony
         private void createTimer_Tick(object sender, EventArgs e)
         {
             var ball = Factory.CreateNew();
-            _balls.Add(ball);
+            _toys.Add(ball);
             ball.Left = 0 - ball.Width;
             mainPanel.Controls.Add(ball);
 
@@ -40,7 +41,7 @@ namespace Karacsony
         private void conveyorTimer_Tick(object sender, EventArgs e)
         {
             var position = 0;
-            foreach (var ball in _balls)
+            foreach (var ball in _toys)
             {
                 ball.MoveBall();
                 if (ball.Left > position)
@@ -49,9 +50,9 @@ namespace Karacsony
                 }
                 if (position > 1000)
                 {
-                    var first = _balls[0];
+                    var first = _toys[0];
                     mainPanel.Controls.Remove(first);
-                    _balls.Remove(first);
+                    _toys.Remove(first);
 
                 }
             }
