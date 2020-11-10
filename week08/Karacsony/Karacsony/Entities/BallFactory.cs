@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Karacsony.Entities
 {
-    class BallFactory
+    public class BallFactory
     {
         public Ball CreateNew()
         {
