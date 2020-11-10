@@ -19,8 +19,11 @@ namespace Karacsony
         public IToyFactory Factory
         {
             get { return _factory; }
-            set { _factory = value; }
+            set { _factory = value;
+                DisplayNext(); 
+            }
         }
+        private Toy _nextToy;
 
 
         public Form1()
@@ -43,7 +46,7 @@ namespace Karacsony
             var position = 0;
             foreach (var ball in _toys)
             {
-                ball.MoveBall();
+                ball.MoveToy();
                 if (ball.Left > position)
                 {
                     position = ball.Left;
@@ -57,6 +60,40 @@ namespace Karacsony
                 }
             }
 
+        }
+
+        private void carBtn_Click(object sender, EventArgs e)
+        {
+            Factory = new CarFactory();
+
+        }
+
+        private void ballBtn_Click(object sender, EventArgs e)
+        {
+            Factory = new BallFactory() {
+                BallColor = ballColor.BackColor
+            };
+        }
+
+        private void DisplayNext() {
+
+            if (_nextToy != null)
+                Controls.Remove(_nextToy);
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = label1.Top + label1.Height + 20;
+            _nextToy.Left = label1.Left;
+            Controls.Add(_nextToy);
+
+        }
+
+        private void ballColor_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var colorPicker = new ColorDialog();
+            colorPicker.Color = button.BackColor;
+            if (colorPicker.ShowDialog() != DialogResult.OK)
+                return;
+            button.BackColor = colorPicker.Color;
         }
     }
 }
