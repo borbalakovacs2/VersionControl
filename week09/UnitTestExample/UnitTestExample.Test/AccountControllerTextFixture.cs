@@ -16,7 +16,7 @@ namespace UnitTestExample.Test
         TestCase("irf@uni-corvinus", false),
         TestCase("irf.uni-corvinus.hu", false),
         TestCase("irf@uni-corvinus.hu", true)]
-        public void TestValidate(string email, bool expectedValue)
+        public void TestValidate(string email, bool expectedResult)
         {
 
 
